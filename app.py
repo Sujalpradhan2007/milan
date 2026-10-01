@@ -4,6 +4,8 @@ import sqlite3
 import uuid
 from datetime import datetime
 from functools import wraps
+import cloudinary
+import cloudinary.uploader
 
 import psycopg
 from psycopg.rows import dict_row
@@ -20,6 +22,12 @@ BASE = os.path.abspath(os.path.dirname(__file__))
 SQLITE_DB = os.path.join(BASE, "milan.db")
 
 UPLOADS = os.path.join(BASE, "static", "uploads")
+cloudinary.config(
+    cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.environ.get("CLOUDINARY_API_KEY"),
+    api_secret=os.environ.get("CLOUDINARY_API_SECRET"),
+    secure=True
+)
 
 LANGUAGES = {
     "en": "English",
@@ -92,7 +100,6 @@ def pack(form, prefix):
         for lang in LANGUAGES
     })
 
-
 def upload(file):
     if not file or not file.filename:
         return None
@@ -102,13 +109,17 @@ def upload(file):
     if not name:
         return None
 
-    filename = f"{uuid.uuid4().hex}_{name}"
+    try:
+        result = cloudinary.uploader.upload(
+            file,
+            folder="milan-enterprises"
+        )
 
-    file.save(
-        os.path.join(UPLOADS, filename)
-    )
+        return result.get("secure_url")
 
-    return f"uploads/{filename}"
+    except Exception as e:
+        print("Cloudinary upload error:", e)
+        return None
 
 
 def settings():
