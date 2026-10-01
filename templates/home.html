@@ -2,6 +2,11 @@
 
 {% block content %}
 
+{# ---------------------------------------------------------
+   IMAGE URL HELPER
+   Cloudinary URL  -> direct
+   Local uploads   -> static folder
+---------------------------------------------------------- #}
 {% macro image_url(path) %}
     {% if path %}
         {% if path.startswith('http://') or path.startswith('https://') %}
@@ -19,7 +24,10 @@
     {% endif %}
 >
     <div>
-        <div class="eyebrow">Trusted Manufacturing Partner</div>
+
+        <div class="eyebrow">
+            Trusted Manufacturing Partner
+        </div>
 
         <h1>
             {{
@@ -41,7 +49,8 @@
             }}
         </p>
 
-        <a class="btn gold" href="{{ url_for('products',lang=lang) }}">
+        <a class="btn gold"
+           href="{{ url_for('products',lang=lang) }}">
             {{
                 {
                     'en':'Explore Machines',
@@ -56,11 +65,13 @@
            target="_blank">
             Direct WhatsApp Enquiry
         </a>
+
     </div>
 </section>
 
 
 <div class="home-theme-controls" aria-label="Theme selection">
+
     <span>Theme</span>
 
     <button class="theme-choice"
@@ -76,6 +87,7 @@
             aria-pressed="false">
         ☾ Dark
     </button>
+
 </div>
 
 
@@ -86,6 +98,7 @@
     <img src="{{ url_for('static', filename='uploads/dussehra-bumper-offer.jpg') }}"
          alt="Dussehra bumper offer from MILAN ENTERPRISE Pvt Ltd"
          style="display:block;width:100%;border-radius:14px;box-shadow:0 14px 32px #15221e28">
+
 </section>
 
 
@@ -96,21 +109,34 @@
     style="background-image:linear-gradient(120deg,#d28b20dd,#f8d267cc),url('{{ image_url(b.image) }}');background-size:cover"
     {% endif %}
 >
-    <div class="eyebrow">Festival Offer</div>
 
-    <h2>{{ tr(b.title,lang) }}</h2>
+    <div class="eyebrow">
+        Festival Offer
+    </div>
 
-    <p>{{ tr(b.subtitle,lang) }}</p>
+    <h2>
+        {{ tr(b.title,lang) }}
+    </h2>
+
+    <p>
+        {{ tr(b.subtitle,lang) }}
+    </p>
 
     {% if b.link %}
-        <a class="btn" href="{{ b.link }}">Know More</a>
+    <a class="btn" href="{{ b.link }}">
+        Know More
+    </a>
     {% endif %}
+
 </section>
 
 {% else %}
 
 <section class="banner">
-    <div class="eyebrow">Seasonal offer</div>
+
+    <div class="eyebrow">
+        Seasonal offer
+    </div>
 
     <h2>
         {{
@@ -125,6 +151,7 @@
     <p>
         Diwali · Dussehra · Holi · New Year — ask us for current offers.
     </p>
+
 </section>
 
 {% endfor %}
@@ -135,7 +162,10 @@
     <div class="section-title">
 
         <div>
-            <div class="eyebrow">Our range</div>
+
+            <div class="eyebrow">
+                Our range
+            </div>
 
             <h2>
                 {{
@@ -146,9 +176,11 @@
                     }[lang]
                 }}
             </h2>
+
         </div>
 
-        <a class="btn" href="{{ url_for('products',lang=lang) }}">
+        <a class="btn"
+           href="{{ url_for('products',lang=lang) }}">
             View all
         </a>
 
@@ -204,7 +236,10 @@
     <div class="contact-grid">
 
         <div>
-            <div class="eyebrow">Start with confidence</div>
+
+            <div class="eyebrow">
+                Start with confidence
+            </div>
 
             <h2>
                 Machine + Raw Material + Guidance
@@ -214,13 +249,16 @@
                 We help you select the right setup for paper plates,
                 cups and agarbatti production.
             </p>
+
         </div>
 
         <div>
+
             <a class="btn gold"
                href="{{ url_for('contact',lang=lang) }}">
                 Talk to our team
             </a>
+
         </div>
 
     </div>
