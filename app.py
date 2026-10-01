@@ -103,23 +103,12 @@ def pack(form, prefix):
 def upload(file):
     if not file or not file.filename:
         return None
-
     name = secure_filename(file.filename)
-
     if not name:
         return None
-
-    try:
-        result = cloudinary.uploader.upload(
-            file,
-            folder="milan-enterprises"
-        )
-
-        return result.get("secure_url")
-
-    except Exception as e:
-        print("Cloudinary upload error:", e)
-        return None
+    filename = f"{uuid.uuid4().hex}_{name}"
+    file.save(os.path.join(UPLOADS, filename))
+    return f"uploads/{filename}"
 
 
 def settings():
