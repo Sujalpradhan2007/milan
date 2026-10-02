@@ -99,32 +99,15 @@ def pack(form, prefix):
         lang: form.get(f"{prefix}_{lang}", "").strip()
         for lang in LANGUAGES
     })
-
 def upload(file):
     if not file or not file.filename:
         return None
-
     name = secure_filename(file.filename)
-
     if not name:
         return None
-
-    try:
-        result = cloudinary.uploader.upload(
-            file,
-            upload_preset=os.environ.get(
-                "CLOUDINARY_UPLOAD_PRESET",
-                "milan_uplode"
-            ),
-            folder="milan-enterprises"
-        )
-
-        return result.get("secure_url")
-
-    except Exception as e:
-        print("Cloudinary upload error:", repr(e))
-        return None
-
+    filename = f"{uuid.uuid4().hex}_{name}"
+    file.save(os.path.join(UPLOADS, filename))
+    return f"uploads/{filename}"
 
 def settings():
     rows = db().execute(
